@@ -1,0 +1,12 @@
+cat
+cats
+Cat
+Cats
+dog
+dogs
+Dog
+Dogs
+puppy
+Puppy
+kitten
+Kitten
