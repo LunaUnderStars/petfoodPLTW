@@ -4,3 +4,5 @@ dog
 dogs
 puppy
 kitten
+pup
+doggie
