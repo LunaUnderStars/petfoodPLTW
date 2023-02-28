@@ -38,16 +38,14 @@ public class TargetedAd {
   
       /* your code here */
       DataCollector dc = new DataCollector();
-      dc.setData("socialMediaPostsSmall.txt", "targetedWords.txt");
+      dc.setData("socialMediaPosts.txt", "targetedWords.txt");
 
-
+      String advertisement = "We bet your furry friend would love to smell our pet food!";
       String post;
       String[] postArray;
       ArrayList<String> postArrayList;
       String username;
-
       String adUsers = "";
-
 
       //populate keywordArray with target words
       ArrayList<String> keywordArray = new ArrayList<String>();
@@ -75,24 +73,25 @@ public class TargetedAd {
         postArray = post.replaceAll("\"", "").split("\\s+");
         username = postArray[0];
         postArrayList = new ArrayList<String>(Arrays.asList(postArray));
-        System.out.println("Username is " + username);
+        //System.out.println("Username is " + username);
         postArrayList.remove(0);
         
         //check if loaded post contains keywords, add username to list if so.
         if (inPost(postArrayList, keywordArray) == true) {
           adUsers += (username + " ");
-          System.out.println("Username Added to list\nCurrent list: " + adUsers);
+          //System.out.println("Username Added to list\nCurrent list: " + adUsers);
         }
       }
-      System.out.println("Post evaluation complete. Final list of users : " + adUsers);
+      //System.out.println("Post evaluation complete. Final list of users : " + adUsers);
+      dc.prepareAdvertisement("preparedAds.txt", adUsers, advertisement);
     }
 
     //Pass in a post seperated into seperate words and a list of keywords. returns true if a keyword is found within post, false otherwise
     public static boolean inPost(ArrayList<String> postWords, ArrayList<String> keywords) {
       for (String word : postWords) {
-        System.out.println(word);
+        //System.out.println(word);
         for (String keyword : keywords) {
-          System.out.println("Matching with " + keyword);
+          //System.out.println("Matching with " + keyword);
           if (word.toLowerCase().equals(keyword)) {
             return true;
           }
