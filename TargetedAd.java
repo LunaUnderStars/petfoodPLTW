@@ -1,6 +1,10 @@
 /*
  * Problem 2 Sell My Pet Food
  */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class TargetedAd {
 
     public static void main(String[] args)
@@ -33,9 +37,68 @@ public class TargetedAd {
   
   
       /* your code here */
-      
-       
+      DataCollector dc = new DataCollector();
+      dc.setData("socialMediaPostsSmall.txt", "targetedWords.txt");
+
+
+      String post;
+      String[] postArray;
+      ArrayList<String> postArrayList;
+      String username;
+
+      String adUsers = "";
+
+
+      //populate keywordArray with target words
+      ArrayList<String> keywordArray = new ArrayList<String>();
+      Boolean wordsPopulated = false;
+      String targetWord;
+      while (wordsPopulated == false) {
+        targetWord = dc.getNextTargetWord();
+        if (!targetWord.equals("NONE")) {
+          keywordArray.add(targetWord);
+        }
+        else {
+          wordsPopulated = true;
+        }
+
+      }
+
+      while (true) {
+        //load next post
+        post = dc.getNextPost();
+        //if posts are completed, break out
+        if (post.equals("NONE")) {
+          break;
+        }
+        //strip quotation marks, split into individual words, capture username, and remove username from list of words
+        postArray = post.replaceAll("\"", "").split("\\s+");
+        username = postArray[0];
+        postArrayList = new ArrayList<String>(Arrays.asList(postArray));
+        System.out.println("Username is " + username);
+        postArrayList.remove(0);
+        
+        //check if loaded post contains keywords, add username to list if so.
+        if (inPost(postArrayList, keywordArray) == true) {
+          adUsers += (username + " ");
+          System.out.println("Username Added to list\nCurrent list: " + adUsers);
+        }
+      }
+      System.out.println("Post evaluation complete. Final list of users : " + adUsers);
     }
-  
+
+    //Pass in a post seperated into seperate words and a list of keywords. returns true if a keyword is found within post, false otherwise
+    public static boolean inPost(ArrayList<String> postWords, ArrayList<String> keywords) {
+      for (String word : postWords) {
+        System.out.println(word);
+        for (String keyword : keywords) {
+          System.out.println("Matching with " + keyword);
+          if (word.toLowerCase().equals(keyword)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
   }
   
